@@ -23,7 +23,6 @@ jobs:
           filters: frontend/**
 
       - name: npm CI
-        working-directory: ./frontend
         run: npm ci
 
       - name: Build project
