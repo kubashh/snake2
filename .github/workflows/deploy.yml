@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: jjj
+        run: cd https://github.com/kubashh/snake2/fronted
+
       - name: Checkout repo
         uses: actions/checkout@v3
 
