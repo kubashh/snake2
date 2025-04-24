@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   output: "export",
   distDir: "dist",
   basePath: "/snake2",
-  productionBrowserSourceMaps: false,
 }
 
 export default nextConfig
