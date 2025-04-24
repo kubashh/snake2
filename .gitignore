@@ -4,3 +4,6 @@
 
 # production
 /frontend/dist
+
+# nextjs
+/frontend/.next

@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <link rel="icon" href="globe.svg" />
       </Head>
-      <body>
+      <body className="bg-zinc-950 text-zinc-50">
         <Main />
         <NextScript />
       </body>
