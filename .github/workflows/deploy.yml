@@ -24,10 +24,9 @@ jobs:
         with:
           filters: frontend/**
 
-      - name: Install dependencies
-        with:
-          filters: frontend/**
-        uses: bahmutov/npm-install@v1
+      - name: npm CI
+        working-directory: ./frontend
+        run: npm ci
 
       - name: Build project
         run: npm run build
