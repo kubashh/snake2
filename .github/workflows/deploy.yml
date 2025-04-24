@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: jjj
-        run: cd https://github.com/kubashh/snake2/fronted
+        run: cd /kubashh/snake2/fronted
 
       - name: Checkout repo
         uses: actions/checkout@v3
