@@ -16,10 +16,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          filters: frontend/**
 
       - name: Setup Node
-        run:
-          working-directory: frontend
         uses: actions/setup-node@v3
 
       - name: Install dependencies
