@@ -1,9 +1,19 @@
 # dependencies
-/backend/node_modules
-/frontend/node_modules
+/node_modules
+
+# next.js
+/.next/
+/out/
 
 # production
-/frontend/dist
+/dist
 
-# nextjs
-/frontend/.next
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
