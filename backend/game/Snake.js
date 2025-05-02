@@ -9,20 +9,15 @@ import {
   encode,
 } from "../lib/utils.js"
 
-export const isNickFree = (nick) => {
-  // Check nick
-  if (!nick || snakes.find((snake) => snake.nick === nick))
-    return { message: `Choose other nick` }
-
-  return { success: true }
-}
+export const isNickFree = (nick) =>
+  !nick || !snakes.find((snake) => snake.nick === nick)
 
 const del = (snake) => {
-  for (const bodyElement of snake.body) {
-    if (bodyElement != snake.head() && isFreePos(bodyElement) && chance(0.4))
-      apples.push(bodyElement)
-  }
   snakes.splice(snakes.indexOf(snake), 1)
+
+  for (const pos of snake.body) {
+    if (pos != snake.head() && isFreePos(pos) && chance(0.4)) apples[pos] = true
+  }
 
   snake.socket.emit(`end`)
 }
@@ -40,7 +35,7 @@ export class Snake {
     this.direction = randInt(0, 4)
     this.socket = socket
 
-    const nbf = freePos(3)
+    const nbf = freePos(5)
     this.body = [nbf, nbf, nbf]
 
     snakes.push(this)
@@ -56,7 +51,7 @@ export class Snake {
 
   collide(pos) {
     const { x, y } = numToPos(pos)
-    if (x < 0 || x >= boardSize || y < 0 || y >= boardSize) {
+    if (x < 0 || x >= boardSize || pos < 0 || y >= boardSize) {
       del(this)
       return true
     }
@@ -92,24 +87,17 @@ export class Snake {
 
     if (this.collide(newHead)) return
 
-    let condition = true
-    for (let i = 0; i < apples.length; i++) {
-      if (newHead === apples[i]) {
-        apples.splice(i, 1)
-
-        condition = false
-        break
-      }
+    if (apples[newHead]) {
+      delete apples[newHead]
+    } else {
+      this.body.shift()
     }
-
-    if (condition) this.body.shift()
 
     this.body.push(newHead)
   }
 
   sendData() {
     const dataToSend = `${encode(this.head())}${data.board}`
-
     this.socket.emit(`board`, dataToSend)
   }
 }

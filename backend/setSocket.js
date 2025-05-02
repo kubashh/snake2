@@ -1,14 +1,16 @@
 import { isNickFree, Snake } from "./game/Snake.js"
 
+const newRes = (isValid) =>
+  isValid ? { success: true } : { message: `Choose other nick` }
+
 export const setSocket = (socket) => {
   let snake = null
 
   socket.on(`new`, (nick) => {
-    const data = isNickFree(nick)
-    if (data.success) {
-      snake = new Snake(nick, socket)
-    }
-    socket.emit(`new`, data)
+    const isValid = isNickFree(nick)
+    if (isValid) snake = new Snake(nick, socket)
+
+    socket.emit(`new`, newRes(isValid))
   })
 
   socket.on(`direction`, (direction) => {

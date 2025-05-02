@@ -16,9 +16,7 @@ const toHex = (n) => (n < 10 ? n.toString() : String.fromCharCode(65 - 10 + n))
 export const chance = (a) => Math.random() < a
 
 export const isFreePos = (pos) => {
-  for (const pos2 of apples) {
-    if (pos2 === pos) return false
-  }
+  if (apples[pos]) return false
 
   for (const snake of snakes) {
     for (const pos2 of snake.body) {
@@ -40,10 +38,11 @@ export const freePos = (a = 0) => {
 }
 
 const generateAppleCh = boardSize ** 2 * 0.00004
-export const generateApple = () =>
+export const generateApple = () => {
   chance(generateAppleCh) &&
-  apples.length < boardSize / 6 &&
-  apples.push(freePos(2))
+    Object.keys(apples).length < boardSize / 6 &&
+    (apples[freePos(3)] = true)
+}
 
 export const createColor = () => {
   const color = `${colorHash}${toHex(randInt(0, 16))}${toHex(

@@ -1,17 +1,18 @@
 import { apples, data, snakes } from "../lib/consts.js"
 import { encode, generateApple } from "../lib/utils.js"
 
-const update = () => {
-  // Snakes move
+const snakesMove = () => {
   for (const snake of snakes) {
     snake.move()
   }
+}
 
-  generateApple()
-
-  // Generate board
+const genetereBoard = () => {
   data.board = ``
-  data.board = apples.reduce((prev, e) => `${prev}${encode(e)}`, ``)
+  data.board = Object.keys(apples).reduce(
+    (prev, e) => `${prev}${encode(e)}`,
+    ``
+  )
 
   for (const { body, color } of snakes) {
     data.board += color
@@ -19,11 +20,19 @@ const update = () => {
       data.board += encode(pos)
     }
   }
+}
 
-  // Send board
+const sendBoard = () => {
   for (const snake of snakes) {
     snake.sendData()
   }
+}
+
+const update = () => {
+  snakesMove()
+  generateApple()
+  genetereBoard()
+  sendBoard()
 }
 
 export const start = () => {
